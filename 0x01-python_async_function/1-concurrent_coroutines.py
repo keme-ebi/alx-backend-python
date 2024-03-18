@@ -18,25 +18,8 @@ async def wait_n(n: int, max_delay: int) -> List[float]:
         a list of all the delays in ascending order
     """
     delays: list = []
-    for i in range(n):
-        delays.append(await wait_random(max_delay))
-
-    delays = sorted(delays)
+    delay = [wait_random(max_delay) for i in range(n)]
+    for s in asyncio.as_completed(delay):
+        delays.append(await s)
 
     return delays
-
-
-def sorted(li: List[float]) -> List[float]:
-    """
-    sorts a list in ascending order
-    Args:
-        li(list(floats)): a list of floats
-    Return:
-        list of sorted floats
-    """
-    n: int = len(li)
-    for i in range(n):
-        for j in range(0, n - i - 1):
-            if li[j] > li[j + 1]:
-                li[j], li[j + 1] = li[j + 1], li[j]
-    return li
