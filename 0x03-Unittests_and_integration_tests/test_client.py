@@ -10,14 +10,15 @@ class TestGithubOrgClient(unittest.TestCase):
     """a class that inherits from unittest.TestCase in order to test
         the GithubOrgClient class
     """
+
     @parameterized.expand([
-        ("google", {"Success": True}, "Test with google"),
-        ("abc", {"Success": True}, "Test with abc")
+        ("google", {"Success": True}),
+        ("abc", {"Success": True})
     ])
     @patch('client.get_json')
-    def test_org(self, org, expected, docstring, mocked):
+    def test_org(self, org, expected, mocked):
         """
-        a function to test GithubOrgClient.org method
+        This function tests the GithubOrgClient.org method
         """
         mocked.return_value = expected
         test = GithubOrgClient(org)
