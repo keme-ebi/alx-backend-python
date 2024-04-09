@@ -12,15 +12,11 @@ class TestGithubOrgClient(unittest.TestCase):
     """
 
     @parameterized.expand([
-        ("google", {"Success": True}),
-        ("abc", {"Success": True})
+        ("google"),
+        ("abc")
     ])
-    @patch('client.get_json')
-    def test_org(self, org, expected, mocked):
-        """
-        This function tests the GithubOrgClient.org method
-        """
-        mocked.return_value = expected
+    @patch('client.get_json', return_value={"payload": True})
+    def test_org(self, org, mocked):
         test = GithubOrgClient(org)
         url = "https://api.github.com/orgs/{}".format(org)
         self.assertEqual(test.org, mocked.return_value)
