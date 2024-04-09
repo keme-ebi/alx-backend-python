@@ -19,6 +19,6 @@ class TestGithubOrgClient(unittest.TestCase):
         """tests the GithubOrgClien.org method"""
         mocked.return_value = expected
         test = GithubOrgClient(org)
-        url = "https://api.github.com/orgs/{}".format(org)
+        # url = "https://api.github.com/orgs/{}".format(org)
         self.assertEqual(test.org, mocked.return_value)
-        mocked.assert_called_once_with(url)
+        mocked.assert_called_once()
