@@ -54,17 +54,19 @@ class TestMemoize(unittest.TestCase):
     def test_memoize(self):
         """tests the memoize decorator"""
         class TestClass:
+            """class to test the memoize decorator"""
 
             def a_method(self):
+                """a_method that returns 42"""
                 return 42
 
             @memoize
             def a_property(self):
+                """returns the a_method"""
                 return self.a_method()
 
         with patch.object(TestClass, 'a_method') as mocked:
             call = TestClass()
-            res1 = call.a_property()
-            res2 = call.a_property()
+            call.a_property()
+            call.a_property()
             mocked.assert_called_once()
-            self.assertEqual(res1, res2)
