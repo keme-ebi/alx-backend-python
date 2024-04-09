@@ -11,16 +11,13 @@ class TestGithubOrgClient(unittest.TestCase):
         the GithubOrgClient class
     """
     @parameterized.expand([
-        ("google", {"Success": True}),
-        ("abc", {"Success": True})
+        ("google", {"Success": True}, "Test with google"),
+        ("abc", {"Success": True}, "Test with abc")
     ])
     @patch('client.get_json')
-    def test_org(self, org, expected, mocked):
-        """tests the GithubOrgClient.org method
-        Args:
-            org: name of the organisation
-            expected: the expected result
-            mocked: the function to mock
+    def test_org(self, org, expected, docstring, mocked):
+        """
+        a function to test GithubOrgClient.org method
         """
         mocked.return_value = expected
         test = GithubOrgClient(org)
