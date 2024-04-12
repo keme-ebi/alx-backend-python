@@ -35,11 +35,10 @@ class TestGithubOrgClient(unittest.TestCase):
     @patch("client.get_json", return_value=[{"name": "l1"}, {"name": "l2"}])
     def test_public_repos(self, mocked):
         """test the GithubOrgClient.public_repos mehtod"""
-        url = "https://api.github.com/orgs/google"
         with patch('client.GithubOrgClient._public_repos_url',
                    new_callable=PropertyMock) as mocked2:
-            mocked2.return_value = url
-            test = GithubOrgClient('test')
+            mocked2.return_value = "random"
+            test = GithubOrgClient('google')
             self.assertEqual(test.public_repos(),
                              [repo['name'] for repo in mocked.return_value])
             mocked2.assert_called_once()
