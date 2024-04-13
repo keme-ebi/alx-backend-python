@@ -2,6 +2,7 @@
 """tests the client module"""
 import unittest
 from client import GithubOrgClient
+from fixtures import TEST_PAYLOAD
 from parameterized import parameterized
 from unittest.mock import patch, PropertyMock
 
@@ -52,3 +53,23 @@ class TestGithubOrgClient(unittest.TestCase):
         """tests GithubOrgClient.has_license method"""
         test = GithubOrgClient('google')
         self.assertEqual(test.has_license(repo, license_key), expected)
+
+
+@parameterized_class(
+    ('org_payload', 'repos_payload', 'expected_repos', 'apache2_repos'),
+    [(TEST_PAYLOAD[0][0], TEST_PAYLOAD[0][1], TEST_PAYLOAD[0][2],
+      TEST_PAYLOAD[0][3])]
+)
+class TestIntegrationGithubOrgClien(unittest.TestCase):
+    """an integration class"""
+
+    @classmethod
+    def setUpClass(cls):
+        """mocks requests.get to return example payloads found in fixtures"""
+        cls.get_patcher = patch('utils.requests.get', side_effect=requests_get)
+        cls.get_patcher.start()
+
+    @classmethod
+    def tearDownClass(cls):
+        """tears down/ stops the patcher"""
+        cls.get_patcher.stop()
